@@ -2,7 +2,7 @@
 
 # Print help information if no args given, requires sudo privileges for nmap update,UDP, and aggressive scans
 if [ $# -eq 0 ]; then
-   echo "Usage: sudo ./auto_recon.sh '<IP Range>'";
+   echo "Usage: sudo ./nmap_recon.sh '<IP Range>'";
    exit 1;
 fi
 
