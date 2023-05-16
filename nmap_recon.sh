@@ -51,7 +51,13 @@ echo -e "All open UDP ports:\n"$open_udp_ports
 
 # Conduct agressive and vulnerability scan for each IP on UDP and TCP open ports
 echo -e "\nStarting nmap aggressive scan of all open TCP and UDP ports...\n"
-for ip in $(cat targets.txt); do sudo nmap -Pn -sT -sU -A -T4 -p U:$open_udp_ports,T:$open_tcp_ports --open $ip --script vuln -oA $ip/agg.scan; done
+# Will alter scan if no UDP ports
+if [ -z "$open_udp_ports" ]
+then
+	for ip in $(cat targets.txt); do sudo nmap -Pn -sT -sU -A -T4 -p $open_tcp_ports --open $ip --script vuln -oA $ip/agg.scan; done
+else
+	for ip in $(cat targets.txt); do sudo nmap -Pn -sT -sU -A -T4 -p U:$open_udp_ports,T:$open_tcp_ports --open $ip --script vuln -oA $ip/agg.scan; done
+fi
 
 # Display identified exploits for all targets sorted by highest CVSS and save to file
 echo -e "Finding all identified exploits against targets...\n"
