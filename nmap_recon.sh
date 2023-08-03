@@ -69,7 +69,7 @@ grep -R "CVE" */agg.scan.nmap | sort -u | grep -v mitre | sed 's/IDs:  CVE:/    
 
 # Display identified software from nmap scans and save to a file
 echo -e "Finding all identified software and versions for targets...\n"
-grep -RPo "cpe:/a:[\w:\.]+" */agg.scan.xml | sed 's/\/agg.scan.xml:/ /g; s/:/ /g; s/_/ /g' | awk '{ $2="";$3=""; print $0 }' | sort -u -k2 | tee exploits/technologies.txt
+grep -RPo "cpe:/a:[\w:\.]+" */agg.scan.xml | sed 's/\/agg.scan.xml:/ /g; s/:/ /g; s/_/ /g' | awk '{ $2="";$3=""; print $0 }' | sort -u -k2 | sort -t. -nk4 | tee exploits/technologies.txt
 
 # Search for exploits on searchsploit affecting found technologies
 echo -e "Searching searchsploit for exploits...\n"
